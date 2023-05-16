@@ -1,6 +1,5 @@
 package com.cleversonfernando.casodetestesmockito;
 
-import com.cleversonfernando.casodetestesmockito.domain.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,5 +10,4 @@ public class CasodetestesmockitoApplication {
         SpringApplication.run(CasodetestesmockitoApplication.class, args);
     }
 
-    User user = new User(1, "Valdir", "valdir@gmail.com", "12345");
 }
