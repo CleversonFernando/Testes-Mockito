@@ -4,6 +4,7 @@ import com.cleversonfernando.casodetestesmockito.DTO.UserDTO;
 import com.cleversonfernando.casodetestesmockito.domain.User;
 import com.cleversonfernando.casodetestesmockito.repositories.UserRepository;
 import com.cleversonfernando.casodetestesmockito.services.UserService;
+import com.cleversonfernando.casodetestesmockito.services.exceptions.DataIntegratyViolationException;
 import com.cleversonfernando.casodetestesmockito.services.exceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(UserDTO obj) {
+        findByEmail(obj);
         return userRepository.save(mapper.map(obj, User.class));
+    }
+
+    private void findByEmail(UserDTO userDTO) {
+        Optional<User> user = userRepository.findByEmail(userDTO.getEmail());
+        if (user.isPresent()) {
+            throw new DataIntegratyViolationException("E-mail já cadastrado!");
+        }
     }
 }

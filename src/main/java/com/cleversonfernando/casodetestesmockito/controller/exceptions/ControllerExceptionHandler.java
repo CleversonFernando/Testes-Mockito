@@ -1,5 +1,6 @@
 package com.cleversonfernando.casodetestesmockito.controller.exceptions;
 
+import com.cleversonfernando.casodetestesmockito.services.exceptions.DataIntegratyViolationException;
 import com.cleversonfernando.casodetestesmockito.services.exceptions.ObjectNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -17,4 +18,10 @@ public class ControllerExceptionHandler {
         StandardError err = new StandardError(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
     }
+    @ExceptionHandler(DataIntegratyViolationException.class)
+    public ResponseEntity<StandardError> dataIntegrityViolation(DataIntegratyViolationException e, HttpServletRequest request) {
+        StandardError err = new StandardError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
+
 }
