@@ -16,12 +16,13 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/users")
 public class UserController {
 
+    public static final String ID = "/{id}";
     @Autowired
     private ModelMapper mapper;
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = ID)
     public ResponseEntity<UserDTO> findById(@PathVariable Integer id) {
         return ResponseEntity.ok().body(mapper.map(userService.findById(id), UserDTO.class));
     }
@@ -35,14 +36,19 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserDTO> create(@RequestBody UserDTO userDTO) {
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userService.create(userDTO).getId()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path(ID).buildAndExpand(userService.create(userDTO).getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = ID)
     public ResponseEntity<UserDTO> update(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
         userDTO.setId(id);
         return ResponseEntity.ok().body(mapper.map(userService.update(userDTO), UserDTO.class));
     }
-}
 
+    @DeleteMapping(value = ID)
+    public ResponseEntity<UserDTO> delete(@PathVariable Integer id) {
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+}
