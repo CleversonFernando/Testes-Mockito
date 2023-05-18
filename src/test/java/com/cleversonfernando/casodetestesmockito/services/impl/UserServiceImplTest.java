@@ -3,6 +3,7 @@ package com.cleversonfernando.casodetestesmockito.services.impl;
 import com.cleversonfernando.casodetestesmockito.DTO.UserDTO;
 import com.cleversonfernando.casodetestesmockito.domain.User;
 import com.cleversonfernando.casodetestesmockito.repositories.UserRepository;
+import com.cleversonfernando.casodetestesmockito.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,6 +26,7 @@ class UserServiceImplTest {
     public static final String NAME = "Valdir";
     public static final String EMAIL = "valdir@gmail.com";
     public static final String PASSWORD = "123";
+    public static final String OBJETO_NAO_ENCONTRADO = "Objeto não encontrado!";
 
     @InjectMocks
     private UserServiceImpl userService;
@@ -51,6 +53,17 @@ class UserServiceImplTest {
         assertEquals(ID, response.getId());
         assertEquals(NAME, response.getName());
         assertEquals(EMAIL, response.getEmail());
+    }
+
+    @Test
+    void whenFindByIdThenReturnObjectNotFoundException() {
+        when(userRepository.findById(anyInt())).thenThrow(new ObjectNotFoundException(OBJETO_NAO_ENCONTRADO));
+    try {
+        userService.findById(ID);
+    }catch (Exception e){
+        assertEquals(ObjectNotFoundException.class, e.getClass());
+        assertEquals(OBJETO_NAO_ENCONTRADO, e.getMessage());
+    }
     }
 
     @Test
