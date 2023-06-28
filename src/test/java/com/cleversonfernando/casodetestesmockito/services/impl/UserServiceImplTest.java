@@ -62,7 +62,7 @@ class UserServiceImplTest {
 
     @Test
     void whenFindByIdThenReturnObjectNotFoundException() {
-        when(userRepository.findById(anyInt())).thenThrow(new ObjectNotFoundException(OBJETO_NAO_ENCONTRADO));
+        Mockito.when(userRepository.findById(anyInt())).thenThrow(new ObjectNotFoundException(OBJETO_NAO_ENCONTRADO));
         try {
             userService.findById(ID);
         } catch (Exception e) {
@@ -145,7 +145,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void deleteWithObjectNotFoundException() {
+    void WhenDeleteWithObjectNotFoundException() {
         when(userRepository.findById(anyInt()))
                 .thenThrow(new ObjectNotFoundException(OBJETO_NAO_ENCONTRADO));
         try {

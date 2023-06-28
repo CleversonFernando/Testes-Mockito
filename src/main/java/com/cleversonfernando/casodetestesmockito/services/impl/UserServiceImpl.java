@@ -28,6 +28,7 @@ public class UserServiceImpl implements UserService {
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado!"));
     }
 
+
     public List<User> findAll() {
         return userRepository.findAll();
     }
