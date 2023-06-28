@@ -145,7 +145,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void WhenDeleteWithObjectNotFoundException() {
+    void whenDeleteWithObjectNotFoundException() {
         when(userRepository.findById(anyInt()))
                 .thenThrow(new ObjectNotFoundException(OBJETO_NAO_ENCONTRADO));
         try {
