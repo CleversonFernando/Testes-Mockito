@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -49,7 +50,7 @@ class UserServiceImplTest {
 
     @Test
     void whenFindByIdThenReturnUserInstance() {
-        when(userRepository.findById(anyInt())).thenReturn(optionalUser);
+        Mockito.when(userRepository.findById(anyInt())).thenReturn(optionalUser);
         User response = userService.findById(ID);
         assertNotNull(response);
         assertEquals(User.class, response.getClass());
@@ -108,7 +109,17 @@ class UserServiceImplTest {
     }
 
     @Test
-    void update() {
+    void whenUpdateThenReturnSuccess() {
+        when(userRepository.save(any())).thenReturn(user);
+
+        User response = userService.update(userDTO);
+
+        assertNotNull(response);
+        assertEquals(User.class, response.getClass());
+        assertEquals(ID, response.getId());
+        assertEquals(NAME, response.getName());
+        assertEquals(EMAIL, response.getEmail());
+        assertEquals(PASSWORD, response.getPassword());
     }
 
     @Test
