@@ -28,9 +28,7 @@ class UserControllerTest {
     public static final String NAME = "Valdir";
     public static final String EMAIL = "valdir@gmail.com";
     public static final String PASSWORD = "123";
-    public static final String OBJETO_NAO_ENCONTRADO = "Objeto não encontrado!";
     public static final int INDEX = 0;
-    public static final String E_MAIL_JA_CADASTRADO = "E-mail já cadastrado!";
 
     private User user;
     private UserDTO userDTO;
@@ -63,8 +61,6 @@ class UserControllerTest {
         assertEquals(NAME, response.getBody().getName());
         assertEquals(EMAIL, response.getBody().getEmail());
         assertEquals(PASSWORD, response.getBody().getPassword());
-
-
     }
 
     @Test
@@ -84,7 +80,6 @@ class UserControllerTest {
         assertEquals(NAME, response.getBody().get(INDEX).getName());
         assertEquals(EMAIL, response.getBody().get(INDEX).getEmail());
         assertEquals(PASSWORD, response.getBody().get(INDEX).getPassword());
-
     }
 
     @Test
@@ -101,7 +96,7 @@ class UserControllerTest {
     @Test
     void whenUpdateThenReturnSuccess() {
         Mockito.when(service.update(userDTO)).thenReturn(user);
-        Mockito.when(mapper.map(any(),any())).thenReturn(userDTO);
+        Mockito.when(mapper.map(any(), any())).thenReturn(userDTO);
 
         ResponseEntity<UserDTO> response = userController.update(ID, userDTO);
 
@@ -120,14 +115,12 @@ class UserControllerTest {
     void whenDeleteThenReturnSuccess() {
         doNothing().when(service).delete(anyInt());
 
-        ResponseEntity<UserDTO>response = userController.delete(ID);
+        ResponseEntity<UserDTO> response = userController.delete(ID);
 
         assertNotNull(response);
         assertEquals(ResponseEntity.class, response.getClass());
         verify(service, times(1)).delete(anyInt());
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-
-
     }
 
     private void startUser() {
