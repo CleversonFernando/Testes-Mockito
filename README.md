@@ -1,7 +1,7 @@
 # Testes-Mockito
 
 # Sobre o projeto
-O projeto consiste em realizar os testes de cobertura e de integração utilizando Junit e Mockito, finalizando com a disponibilização da aplicação na nuvem pela plataforma da Railway.
+O projeto consiste em realizar os testes de cobertura e de componentes utilizando Junit e Mockito, finalizando com a disponibilização da aplicação na nuvem pela plataforma da Railway.
 
 ## Teste de integração
 
